@@ -9,7 +9,14 @@ KOB_APIKEY_INPUT=${kobiton_api_key}
 APP_SUFFIX_INPUT=${kobiton_app_type}
 KOB_APP_ACCESS=${kobiton_app_access}
 
-BASICAUTH=$(echo -n $KOB_USERNAME_INPUT:$KOB_APIKEY_INPUT | base64)
+echo | base64 -w0 > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  # GNU coreutils base64, '-w' supported
+  BASICAUTH=$(echo -n $KOB_USERNAME_INPUT:$KOB_APIKEY_INPUT | base64 -w 0)
+else
+  # Openssl base64, no wrapping by default
+  BASICAUTH=`echo -n $KOB_USERNAME_INPUT:$KOB_APIKEY_INPUT | base64`
+fi
 
 echo "Using Auth: $BASICAUTH"
 
