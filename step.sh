@@ -15,7 +15,7 @@ if [ $? -eq 0 ]; then
   BASICAUTH=$(echo -n $KOB_USERNAME_INPUT:$KOB_APIKEY_INPUT | base64 -w 0)
 else
   # Openssl base64, no wrapping by default
-  BASICAUTH=`echo -n $KOB_USERNAME_INPUT:$KOB_APIKEY_INPUT | base64`
+  BASICAUTH=$(echo -n $KOB_USERNAME_INPUT:$KOB_APIKEY_INPUT | base64)
 fi
 
 echo "Using Auth: $BASICAUTH"
